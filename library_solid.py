@@ -1,4 +1,11 @@
 from abc import ABC, abstractmethod
+import logging
+
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
 
 class Book:
     def __init__(self, title: str, author: str, year: int):
@@ -8,6 +15,7 @@ class Book:
 
     def __str__(self):
         return f"Title: {self.title}, Author: {self.author}, Year: {self.year}"
+
 
 class LibraryInterface(ABC):
     @abstractmethod
@@ -22,6 +30,7 @@ class LibraryInterface(ABC):
     def show_book(self):
         pass
 
+
 class Library(LibraryInterface):
     def __init__(self):
         self.books = []
@@ -34,9 +43,10 @@ class Library(LibraryInterface):
 
     def show_book(self):
         if not self.books:
-            print("No books in the library.")
+            logging.info("No books in the library.")
         for book in self.books:
             print(book)
+
 
 class LibraryManager:
     def __init__(self, library: LibraryInterface):
@@ -45,13 +55,14 @@ class LibraryManager:
     def add_book(self, title: str, author: str, year: int):
         book = Book(title, author, year)
         self.library.add_book(book)
-        print(f'Book "{title}" added successfully.')
+        logging.info(f'Book "{title}" added successfully.')
 
     def remove_book(self, title: str):
         self.library.remove_book(title)
 
     def show_books(self):  # Виправлено назву методу
         self.library.show_book()
+
 
 def main():
     library = Library()
@@ -75,6 +86,7 @@ def main():
                 break
             case _:
                 print("Invalid command. Please try again.")
+
 
 if __name__ == "__main__":
     main()

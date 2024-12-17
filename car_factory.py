@@ -1,4 +1,11 @@
 from abc import ABC, abstractmethod
+import logging
+
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
 
 class Vehicle(ABC):
     def __init__(self, make, model, spec):
@@ -10,16 +17,18 @@ class Vehicle(ABC):
     def start_engine(self):
         pass
 
+
 class Car(Vehicle):
     def start_engine(self):
-        print(f"{self.make} {self.model}: Двигун запущено")
+        logging.info(f"{self.make} {self.model}: Двигун запущено")
+
 
 class Motorcycle(Car):
     def start_engine(self):
-        print(f"{self.make} {self.model}: Мотор заведено")
-        
-class VehicleFactory(ABC):
+        logging.info(f"{self.make} {self.model}: Мотор заведено")
 
+
+class VehicleFactory(ABC):
     @abstractmethod
     def create_car(self, make, model):
         pass
@@ -27,6 +36,7 @@ class VehicleFactory(ABC):
     @abstractmethod
     def create_motorcycle(self, make, model):
         pass
+
 
 class USVehicleFactory(VehicleFactory):
     def create_car(self, make, model):
@@ -36,13 +46,13 @@ class USVehicleFactory(VehicleFactory):
         return Motorcycle(make, model, "US Spec")
 
 
-
 class EUVehicleFactory(VehicleFactory):
     def create_car(self, make, model):
         return Car(make, model, "EU Spec")
 
     def create_motorcycle(self, make, model):
         return Motorcycle(make, model, "EU Spec")
+
 
 def main():
     us_factory = USVehicleFactory()
@@ -57,6 +67,6 @@ def main():
     eu_car.start_engine()
     eu_motorcycle.start_engine()
 
+
 if __name__ == "__main__":
     main()
-
