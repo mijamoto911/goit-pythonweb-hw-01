@@ -70,7 +70,7 @@ def main():
                 title = input("Enter book title to remove: ").strip()
                 manager.remove_book(title)
             case "show":
-                manager.show_books() 
+                manager.show_books()
             case "exit":
                 break
             case _:
